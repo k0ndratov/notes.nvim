@@ -1,0 +1,30 @@
+#!/bin/bash
+
+show_help() {
+  echo "Usage: notes [options]"
+  echo ""
+  echo "Options:"
+  echo "  -n, --new [name]  Create a new note (daily by default)"
+  echo "  -h, --help        Show this help"
+}
+
+case "$1" in
+  -h|--help)
+    show_help
+    ;;
+  -n|--new)
+    if [ -n "$2" ]; then
+      nvim +"lua require('notes').open('$2')"
+    else
+      nvim +"lua require('notes').open()"
+    fi
+    ;;
+  "")
+    nvim +"lua require('notes').browse()"
+    ;;
+  *)
+    echo "Unknown option: $1"
+    show_help
+    exit 1
+    ;;
+esac

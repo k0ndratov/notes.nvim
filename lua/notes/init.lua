@@ -16,6 +16,13 @@ function M.open(name)
   vim.cmd(M.config.open_cmd .. ' ' .. filepath)
 end
 
+function M.browse()
+  local dir = vim.fn.expand(M.config.dir)
+  vim.fn.mkdir(dir, 'p')
+  vim.api.nvim_set_current_dir(dir)
+  vim.cmd.tabnew(dir)
+end
+
 function M.setup(opts)
   M.config = vim.tbl_deep_extend('force', M.config, opts or {})
 end
